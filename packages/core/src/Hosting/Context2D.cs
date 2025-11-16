@@ -11,6 +11,6 @@ using Microsoft.Extensions.Logging;
 
 public static partial class Context2D
 {
-    [JSImport("context2D.fillRect")]
+    [JSImport("context2D.fillRect", "main.js")]
     public static partial void FillRect(int x, int y, int width, int height);
 }

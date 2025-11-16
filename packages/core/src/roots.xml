@@ -8,4 +8,11 @@
     <type fullname="Microsoft.CodeAnalysis.EmbeddedLanguages.EmbeddedLanguageMetadata" />
     <type fullname="Microsoft.CodeAnalysis.Shared.DefaultDocumentSupportsFeatureService" />
   </assembly>
+  <!-- Ensure Context2D isn't removed by the IL linker/trimmer. Context2D is in the global namespace
+       inside the WasmSharp.Core assembly and contains JS-imported methods (e.g. FillRect).
+       Preserve the whole type to allow the runtime to resolve the [JSImport] calls and to
+       make sure the generated assemblies include this type for the runtime/JS interop. -->
+  <assembly fullname="WasmSharp.Core">
+    <type fullname="Context2D" preserve="all" />
+  </assembly>
 </linker>

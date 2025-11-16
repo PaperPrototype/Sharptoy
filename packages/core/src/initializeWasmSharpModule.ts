@@ -103,7 +103,9 @@ export async function initializeWasmSharpModule(
     const context2D = await context2DProvider();
     if (context2D) {
       console.log("setModuleImports")
-      setModuleImports("context2D", context2D);
+      setModuleImports("main.js", {
+        context2D,
+      });
     }
   }
 

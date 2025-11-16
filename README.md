@@ -3,6 +3,9 @@
 <p align='center'>
 Compile and run C# programs locally from your web browser, no server necessary. Diagnostics and completions are supported.</p>
 
+> [!NOTE]
+> This fork attempts to add support for drawing to a canvas using CanvasRenderingContext2D
+
 ## Live demo
 
 https://wasmsharp.pages.dev/
@@ -132,7 +135,7 @@ Building @wasmsharp/core, building the playground, and then previewing it has a 
 pnpm all
 ```
 
-### Base Program class
+### Base Program class (for reference)
 ```cs
 using System;
 

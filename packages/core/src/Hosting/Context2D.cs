@@ -1,19 +1,11 @@
-//https://github.com/dotnet/aspnetcore/blob/da6c314d76628c1f130f76ed3e55f1d39057e091/src/Components/WebAssembly/WebAssembly/src/Services/WebAssemblyConsoleLogger.cs
-
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-
 using System.Runtime.InteropServices.JavaScript;
-using System.Text;
-using Microsoft.Extensions.Logging;
-
-// namespace Microsoft.AspNetCore.Components.WebAssembly.Services;
 
 public static partial class Context2D
 {
     // SETTERS
     [JSImport("context2D.globalAlpha", "main.js")] public static partial void GlobalAlpha(double a);
     [JSImport("context2D.fillStyle", "main.js")] public static partial void FillStyle(string color);
+    [JSImport("context2D.strokeStyle", "main.js")] public static partial void StrokeStyle(string color);
     [JSImport("context2D.lineWidth", "main.js")] public static partial void LineWidth(double w);
     [JSImport("context2D.font", "main.js")] public static partial void Font(string font);
 

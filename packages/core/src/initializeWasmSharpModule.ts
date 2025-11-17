@@ -139,6 +139,9 @@ export async function initializeWasmSharpModule(
           fillStyle: (c: string) => {
             context2D.fillStyle = c;
           },
+          strokeStyle: (c: string) => {
+            context2D.strokeStyle = c;
+          },
           lineWidth: (w: number) => {
             context2D.lineWidth = w;
           },

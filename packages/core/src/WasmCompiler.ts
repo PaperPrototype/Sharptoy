@@ -98,6 +98,14 @@ export type CompletionItem = {
 };
 
 export interface AssemblyExports {
+  Input: {
+    Reset: () => void;
+    CallUpdate: (deltaTime: number) => void,
+    CallResize: (w: number, h: number) => void,
+    CallMouseUp: (x: number, y: number) => void,
+    CallMouseMove: (x: number, y: number) => void,
+    CallMouseDown: (x: number, y: number) => void,
+  }
   WasmSharp: {
     Core: {
       CompilationInterop: CompilationInterop;

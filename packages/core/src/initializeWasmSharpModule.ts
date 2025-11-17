@@ -19,6 +19,35 @@ function getDirectory(path: string) {
   }
 }
 
+function getMousePos(canvas: HTMLCanvasElement, evt: MouseEvent): { x: number; y: number; pixelRatio: number } {
+  const rect = canvas.getBoundingClientRect(); // CSS size & position
+  const cssWidth = rect.width || canvas.clientWidth || 0;
+  // compute the effective pixel ratio: how many canvas pixels per CSS pixel
+  const pixelRatio = cssWidth > 0 ? canvas.width / cssWidth : (window.devicePixelRatio || 1);
+  return {
+    x: (evt.clientX - rect.left),
+    y: (evt.clientY - rect.top),
+    pixelRatio,
+  };
+}
+
+let resize: (w:number,h:number) => void;
+let mouseUp:   (x: number, y: number) => void;
+let mouseDown: (x: number, y: number) => void;
+let mouseMove: (x: number, y: number) => void;
+let updateMethod: (deltaTime: number) => void;
+let lastFrameTime = performance.now();
+
+function update() {
+  const currentTime = performance.now();
+  const deltaTime = (currentTime - lastFrameTime) / 1000; // in seconds
+  lastFrameTime = currentTime;
+  
+  updateMethod?.(deltaTime);
+  requestAnimationFrame(update);
+}
+requestAnimationFrame(update);
+
 export async function initializeWasmSharpModule(
   options: WasmSharpModuleOptions | undefined,
   callbacks: WasmSharpModuleCallbacks | undefined
@@ -85,8 +114,6 @@ export async function initializeWasmSharpModule(
   if (!canvasProvider) {
     throw new Error("WasmSharp: no canvas provider configured");
   }
-
-  console.log("before context2DProvider");
 
   const context2DProvider = canvasProvider
     ? async () => {
@@ -186,6 +213,7 @@ export async function initializeWasmSharpModule(
   const config = getConfig();
   console.log("WasmSharp: Config loaded", config);
   const assemblyExports: AssemblyExports = await getAssemblyExports(config.mainAssemblyName!);
+
   const compilationInterop = assemblyExports.WasmSharp.Core.CompilationInterop;
   //TODO: Rewrite this to use new URL()
   const resolvedAssembliesUrl = new URL(options?.assembliesUrl ?? getDirectory(import.meta.url));
@@ -217,6 +245,48 @@ export async function initializeWasmSharpModule(
       return !!x.resolvedUrl;
     })
     .map((x) => new URL(x.resolvedUrl!, resolvedAssembliesUrl).href);
+
+
+  // Update loop for programs
+  console.log("assemblyExports", assemblyExports)
+  assemblyExports.Input.Reset();
+  updateMethod = (dt: number) => {assemblyExports.Input.CallUpdate(dt)}
+  mouseUp = (x:number,y:number) => {assemblyExports.Input.CallMouseUp(x, y)};
+  mouseDown = (x:number,y:number) => {assemblyExports.Input.CallMouseDown(x, y)};
+  mouseMove = (x:number,y:number) => {assemblyExports.Input.CallMouseMove(x, y)};
+  resize = (w:number,h:number) => {assemblyExports.Input.CallResize(w, h)};
+
+  const canvas = await canvasProvider() as HTMLCanvasElement;
+
+  // bind the input events
+  canvas.addEventListener('mouseup', (e) => {
+    const {x, y} = getMousePos(options?.canvas()!, e);
+    mouseUp(x, y);
+  });
+  canvas.addEventListener('mousedown', (e) => {
+    const {x, y} = getMousePos(options?.canvas()!, e);
+    mouseDown(x, y);
+  });
+  canvas.addEventListener('mousemove', (e) => {
+    const {x, y} = getMousePos(options?.canvas()!, e);
+    mouseMove(x, y);
+  });
+
+  const resizeObserver = new ResizeObserver(() => {
+    const parent = canvas.parentElement;
+    if (parent) {
+      canvas.width = parent.clientWidth;
+      canvas.height = parent.clientHeight;
+      resize(canvas.width, canvas.height);
+    }
+  });
+  
+  const parent = canvas.parentElement;
+  if (parent) {
+    // canvas.width = parent.clientWidth;
+    // canvas.height = parent.clientHeight;
+    resizeObserver.observe(parent);
+  }
 
   await compilationInterop.InitAsync(assemblies);
   const diff2 = performance.now() - time;

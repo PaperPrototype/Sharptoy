@@ -56,7 +56,7 @@ ${result.diagnostics.map((x) => JSON.stringify(x, undefined, "  ")).join("\n")}`
       <Show when={output()}>
         <div class={styles.outputContainer}>
           <h2>Output</h2>
-          <pre>{output()}</pre>
+          <pre class={styles.preContainer}>{output()}</pre>
         </div>
       </Show>
     </div>

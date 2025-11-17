@@ -15,3 +15,8 @@ export const outputContainer = style({
 export const container = style({
   margin: spacing(2, 0, 0, 2),
 });
+
+export const preContainer = style({
+  textWrap: "wrap",
+  overflow: "hidden"
+});

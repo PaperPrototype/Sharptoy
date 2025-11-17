@@ -18,7 +18,7 @@ export const Diagnostics: Component<DiagnosticsProps> = (props) => {
         {(diagnostic, i) => {
           const copy = JSON.parse(JSON.stringify(diagnostic));
           delete copy.location;
-          return <pre style={{ margin: `${spacing(0.75)} 0` }}>{JSON.stringify(copy, undefined, "  ")}</pre>;
+          return <pre style={{ margin: `${spacing(0.75)} 0`, "text-wrap": "wrap" }}>{JSON.stringify(copy, undefined, "  ")}</pre>;
         }}
       </For>
     </Show>

@@ -24,6 +24,7 @@ export interface CodeMirrorEditorProps {
   onValueChanged?: (value: string) => void;
   wasmSharpModule: Promise<WasmSharpModule>;
 }
+
 const CodeMirrorEditor: Component<CodeMirrorEditorProps> = (props) => {
   const [editor, setEditor] = createSignal<EditorView>();
   let editorRef: HTMLDivElement | undefined;
@@ -31,15 +32,13 @@ const CodeMirrorEditor: Component<CodeMirrorEditorProps> = (props) => {
   onMount(() => {
     const initialDocument = `using System;
 
-Console.WriteLine("Hello, world!");`;
+Console.WriteLine("Hello, world!");
+// Use intellisense to detect which functions are available
+Context2D.FillStyle("red");
+Context2D.FillRect(0, 0, 100, 100);`;
     const readUpdates = EditorView.updateListener.of((update) => {
       const document = update.state.doc.toString();
       props.onValueChanged?.(document);
-      // syntaxTree(update.state).iterate({
-      //   enter(node) {
-      //     console.log(node.name);
-      //   },
-      // });
     });
 
     const e = new EditorView({
@@ -61,7 +60,11 @@ Console.WriteLine("Hello, world!");`;
 
   onCleanup(() => editor()?.destroy());
 
-  return <div style={{ height: "100%" }} ref={editorRef!}></div>;
+  return (
+    <div style={{ position: "relative", height: "100%", width: "100%", overflow: "hidden" }}>
+      <div ref={editorRef!} style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0 }}></div>
+    </div>
+  );
 };
 
 async function csharpCompletionSource(context: CompletionContext): Promise<CompletionResult | null> {

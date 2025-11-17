@@ -10,8 +10,7 @@ Compile and run C# programs locally from your web browser, no server necessary. 
 
 ```sh
 pnpm i
-pnpm init-playground-deps
-pnpm --filter playground build
+pnpm build
 
 # then
 vercel build

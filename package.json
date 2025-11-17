@@ -4,6 +4,7 @@
   "scripts": {
     "dev": "pnpm start",
     "init-playground-deps": "pnpm run build:core && pnpm run build:imports-plugin && pnpm run build:vite-plugin",
+    "build": "pnpm init-playground-deps && pnpm --filter playground build",
     "start": "pnpm --filter playground run start",
     "playground": "pnpm run start",
     "test": "pnpm --filter playground test",

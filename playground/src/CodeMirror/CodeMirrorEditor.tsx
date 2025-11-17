@@ -34,7 +34,7 @@ const CodeMirrorEditor: Component<CodeMirrorEditorProps> = (props) => {
 
 Console.WriteLine("Hello, world!");
 
-// Clear anyting from previous runs
+// Clear canvas from previous runs
 Context2D.Reset();
 
 // Intellisense can detect the API!

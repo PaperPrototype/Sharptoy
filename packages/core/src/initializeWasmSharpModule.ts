@@ -66,7 +66,7 @@ export async function initializeWasmSharpModule(
   async function waitForCanvas(provider: any): Promise<any> {
     while (true) {
       try {
-        console.log("inside of waitForCanvas")
+        console.log("inside of waitForCanvas");
         const candidate = typeof provider === "function" ? await provider() : provider;
         if (candidate instanceof HTMLCanvasElement) return candidate;
         // if other truthy canvas-like objects should be accepted, adjust this check
@@ -78,7 +78,7 @@ export async function initializeWasmSharpModule(
     }
   }
 
-  console.log("before waitForCanvas")
+  console.log("before waitForCanvas");
 
   const canvasProvider = options?.canvas ? () => waitForCanvas(options!.canvas) : undefined;
 
@@ -86,11 +86,11 @@ export async function initializeWasmSharpModule(
     throw new Error("WasmSharp: no canvas provider configured");
   }
 
-  console.log("before context2DProvider")
+  console.log("before context2DProvider");
 
   const context2DProvider = canvasProvider
     ? async () => {
-        const canvas = await canvasProvider() as HTMLCanvasElement;
+        const canvas = (await canvasProvider()) as HTMLCanvasElement;
         return canvas!.getContext("2d");
       }
     : undefined;
@@ -102,9 +102,83 @@ export async function initializeWasmSharpModule(
   if (context2DProvider) {
     const context2D = await context2DProvider();
     if (context2D) {
-      console.log("setModuleImports")
+      console.log("setModuleImports, context2D is", context2D);
       setModuleImports("main.js", {
-        context2D,
+        context2D: {
+          // SETTERS
+          globalAlpha: (a: number) => {
+            context2D.globalAlpha = a;
+          },
+          fillStyle: (c: string) => {
+            context2D.fillStyle = c;
+          },
+          lineWidth: (w: number) => {
+            context2D.lineWidth = w;
+          },
+          font: (font: string) => {
+            context2D.font = font;
+          },
+          // FILL SHAPE
+          fillText: (text: string, x: number, y: number) => {
+            context2D.fillText(text, x, y);
+          },
+          fillRect: (x: number, y: number, w: number, h: number) => {
+            context2D.fillRect(x, y, w, h);
+          },
+          strokeRect: (x: number, y: number, w: number, h: number) => {
+            context2D.strokeRect(x, y, w, h);
+          },
+          beginPath: () => {
+            context2D.beginPath();
+          },
+          moveTo: (x: number, y: number) => {
+            context2D.moveTo(x, y);
+          },
+          lineTo: (x: number, y: number) => {
+            context2D.lineTo(x, y);
+          },
+          closePath: () => {
+            context2D.closePath();
+          },
+          stroke: () => {
+            context2D.stroke();
+          },
+          fill: () => {
+            context2D.fill();
+          },
+          // TRANSFORM
+          clip: () => {
+            context2D.clip();
+          },
+          rotate: (angle: number) => {
+            context2D.rotate(angle);
+          },
+          scale: (x: number, y: number) => {
+            context2D.scale(x, y);
+          },
+          translate: (x: number, y: number) => {
+            context2D.translate(x, y);
+          },
+          transform: (a: number, b: number, c: number, d: number, e: number, f: number) => {
+            context2D.transform(a, b, c, d, e, f);
+          },
+          setTransform: (a: number, b: number, c: number, d: number, e: number, f: number) => {
+            context2D.setTransform(a, b, c, d, e, f);
+          },
+          resetTransform: () => {
+            context2D.resetTransform();
+          },
+          // CONTEXT
+          save: () => {
+            context2D.save();
+          },
+          restore: () => {
+            context2D.restore();
+          },
+          reset: () => {
+            context2D.reset();
+          },
+        },
       });
     }
   }
@@ -123,8 +197,6 @@ export async function initializeWasmSharpModule(
   if (!resources) {
     throw new Error("WasmSharp: No resources found in config");
   }
-
-  console.log("RESOURCES", resources)
 
   if (!resources.assembly || !resources.coreAssembly || !resources.satelliteResources) {
     throw new Error("WasmSharp: config is malformed, no assemblies found");
@@ -145,9 +217,6 @@ export async function initializeWasmSharpModule(
       return !!x.resolvedUrl;
     })
     .map((x) => new URL(x.resolvedUrl!, resolvedAssembliesUrl).href);
-
-
-  console.log("ASSEMBLIES", assemblies)
 
   await compilationInterop.InitAsync(assemblies);
   const diff2 = performance.now() - time;

@@ -33,7 +33,11 @@ const CodeMirrorEditor: Component<CodeMirrorEditorProps> = (props) => {
     const initialDocument = `using System;
 
 Console.WriteLine("Hello, world!");
-// Use intellisense to detect which functions are available
+
+// Clear anyting from previous runs
+Context2D.Reset();
+
+// Intellisense can detect the API!
 Context2D.FillStyle("red");
 Context2D.FillRect(0, 0, 100, 100);`;
     const readUpdates = EditorView.updateListener.of((update) => {

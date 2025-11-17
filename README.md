@@ -12,11 +12,30 @@ Compile and run C# programs locally from your web browser, no server necessary. 
 pnpm i
 pnpm build
 
-# then
+# (preview)
 vercel build
-
-# then
 vercel deploy --prebuilt
+
+# (production)
+vercel build --prod
+vercel deploy --prebuilt --prod
+```
+
+## Testing
+```sh
+pnpm i
+pnpm build
+pnpm start
+```
+
+Only rebuild the packages:
+```sh
+pnpm init-playground-deps
+```
+
+Only rebuild the react playground
+```sh
+pnpm --filter playground build
 ```
 
 ## Live demo

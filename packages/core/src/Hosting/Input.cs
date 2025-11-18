@@ -1,3 +1,4 @@
+using System.Numerics;
 using System.Runtime.InteropServices.JavaScript;
 
 public static partial class Input
@@ -8,6 +9,8 @@ public static partial class Input
     public static Action<double, double>? Resize;
     public static Action<double>? Update;
     public static Action<double>? PixelRatio;
+
+    public static Vector2 Mouse = new Vector2();
 
     [JSExport]
     internal static void CallMouseUp(double x, double y)
@@ -24,6 +27,9 @@ public static partial class Input
     [JSExport]
     internal static void CallMouseMove(double x, double y)
     {
+        Mouse.X = (float)x;
+        Mouse.Y = (float)y;
+
         MouseMove?.Invoke(x, y);
     }
 

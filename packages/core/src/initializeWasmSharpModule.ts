@@ -307,8 +307,6 @@ export async function initializeWasmSharpModule(
   
   const parent = canvas.parentElement;
   if (parent) {
-    // canvas.width = parent.clientWidth;
-    // canvas.height = parent.clientHeight;
     resizeObserver.observe(parent);
   }
 

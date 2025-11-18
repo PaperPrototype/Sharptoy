@@ -23,8 +23,6 @@ const Playground: Component = () => {
 
 Console.WriteLine("Angry Bird is ready!");
 
-var xPos = 400.0;
-var yPos = 300.0;
 var PI = 3.14159;
 
 Input.Update = (dt) => {
@@ -33,12 +31,7 @@ Input.Update = (dt) => {
   // blue background
   Context2D.FillStyle("#4287f5");
   Context2D.FillRect(-100, -100, 10000, 10000);
-  DrawAngryBird(xPos, yPos);
-};
-
-Input.MouseMove = (double x, double y) => {
-  xPos = x;
-  yPos = y;
+  DrawAngryBird(Input.Mouse.X, Input.Mouse.Y);
 };
 
 void DrawAngryBird(double x, double y)
@@ -427,8 +420,8 @@ Console.WriteLine("New Tab ${n}");`,
 
   const [showChangelog, setShowChangelog] = createSignal(false);
   const changelogEntries = [
-    { version: "v0.2.0", date: "2025-11-17", notes: "Tabs with add, close, rename, persistence" },
-    { version: "v0.1.0", date: "2025-11-15", notes: "Modified JakeYallop's playground to have a Canvas API" },
+    { version: "v0.2.0", date: "2025-11-17", notes: "Added persistent tabs, fully working Context2D API, as well as Input API with update loop and mouse input via Input.Update and Input.Mouse" },
+    { version: "v0.1.0", date: "2025-11-15", notes: "Successfully modified JakeYallop's playground to have a Canvas API" },
     { version: "fail", date: "2025-8-19", notes: "While trying to create a C# playground I discovered JakeYallop's repo.\nAttempted to get it working but ultimately gave up for a few months" },
   ];
 

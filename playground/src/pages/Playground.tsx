@@ -544,12 +544,12 @@ Console.WriteLine("New Tab ${n}");`,
                   ))}
                 </div>
                 <div style={{ "text-align": "right", "margin-top": "0.5rem" }}>
-                  <a target="_blank" href="https://github.com/PaperPrototype/WasmSharp/commits/main/" style={{ "font-size": "0.85rem", color: "var(--accent, #2563eb)" }}>Full changelog</a>
+                  <a target="_blank" href="https://github.com/PaperPrototype/Sharptoy/commits/main/" style={{ "font-size": "0.85rem", color: "var(--accent, #2563eb)" }}>Full changelog</a>
                 </div>
               </div>
             )}
           </div>
-          <a href="https://github.com/PaperPrototype/WasmSharp" target="_blank" rel="noopener noreferrer" style={{ color: "inherit", "text-decoration": "none" }}>
+          <a href="https://github.com/PaperPrototype/Sharptoy" target="_blank" rel="noopener noreferrer" style={{ color: "inherit", "text-decoration": "none" }}>
             GitHub
           </a>
         </div>

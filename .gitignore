@@ -6,3 +6,4 @@
 *.tsbuildinfo
 *.tgz
 .vercel
+.DS_Store

@@ -102,13 +102,13 @@
   <!-- Investigate caching the built files somewhere during build then recreating the Content items -->
   <Target Name="_TypeScriptCompileAferBuild" AfterTargets="_EnsureTypeScriptOfRequiredVersionInstalled" DependsOnTargets="_EnsureTypeScriptOfRequiredVersionInstalled">
     <Message Importance="high" Text="Compiling TypeScript code to $(MSBuildThisFileDirectory)/typescript"></Message>
-    <Exec Command="pnpm exec tsc -p ./tsconfig.json -outDir $(MSBuildThisFileDirectory)/$(OutputPath)/typescript"></Exec>
+    <!-- <Exec Command="pnpm exec tsc -p ./tsconfig.json -outDir $(MSBuildThisFileDirectory)typescript"></Exec> -->
 
-    <ItemGroup>
+    <!-- <ItemGroup>
       <WasmSharpPackageDeps Include="$(MSBuildThisFileDirectory)/$(OutputPath)/typescript/**/*.js" />
       <WasmSharpPackageDeps Include="$(MSBuildThisFileDirectory)/$(OutputPath)/typescript/**/*.d.ts" />
       <WasmSharpPackageDeps Include="$(MSBuildThisFileDirectory)/$(OutputPath)/typescript/**/*.map" />
-    </ItemGroup>
+    </ItemGroup> -->
   </Target>
 
   <Target Name="_CreateModifiedPackageJson" BeforeTargets="_AddPackageJsonToPackageDeps">

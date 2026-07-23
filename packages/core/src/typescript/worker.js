@@ -1,0 +1,31 @@
+//There does not appear to be a good way to reference web worker and DOM types in the same project for different files.
+//For now, just comment in the above if web worker types are desired (and ignore any DOM types)
+// /// <reference lib="webworker" />
+import * as Comlink from "https://unpkg.com/comlink/dist/esm/comlink.mjs";
+import { Compilation } from "./Compilation";
+import { initializeWasmSharpModule } from "./initializeWasmSharpModule";
+export class WasmSharpWebWorker {
+    interop;
+    constructor() {
+        return this;
+    }
+    async initializeAsync(options) {
+        const onConfigLoaded = (config) => postMessage({ type: "configLoaded", config: null });
+        const onDownloadResourceProgress = (loaded, total) => postMessage({
+            type: "downloadResourceProgress",
+            loadedResources: loaded,
+            totalResources: total,
+        });
+        this.interop = await initializeWasmSharpModule(options, {
+            onConfigLoaded,
+            onDownloadResourceProgress,
+        });
+    }
+    createCompilationAsync(code) {
+        this.#ensureInitialized();
+        return Comlink.proxy(Compilation.create(code, this.interop));
+    }
+    #ensureInitialized() { }
+}
+Comlink.expose(WasmSharpWebWorker);
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoid29ya2VyLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vd29ya2VyLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLHVIQUF1SDtBQUN2SCwrRkFBK0Y7QUFDL0Ysb0NBQW9DO0FBRXBDLE9BQU8sS0FBSyxPQUFPLE1BQU0sZ0RBQWdELENBQUM7QUFDMUUsT0FBTyxFQUFFLFdBQVcsRUFBRSxNQUFNLGVBQWUsQ0FBQztBQUU1QyxPQUFPLEVBQUUseUJBQXlCLEVBQUUsTUFBTSw2QkFBNkIsQ0FBQztBQUd4RSxNQUFNLE9BQU8sa0JBQWtCO0lBQ3JCLE9BQU8sQ0FBc0I7SUFDckM7UUFDRSxPQUFPLElBQUksQ0FBQztJQUNkLENBQUM7SUFDRCxLQUFLLENBQUMsZUFBZSxDQUFDLE9BQWE7UUFDakMsTUFBTSxjQUFjLEdBQUcsQ0FBQyxNQUFrQixFQUFFLEVBQUUsQ0FDNUMsV0FBVyxDQUFDLEVBQUUsSUFBSSxFQUFFLGNBQWMsRUFBRSxNQUFNLEVBQUUsSUFBSyxFQUFFLENBQUMsQ0FBQztRQUN2RCxNQUFNLDBCQUEwQixHQUFHLENBQUMsTUFBYyxFQUFFLEtBQWEsRUFBRSxFQUFFLENBQ25FLFdBQVcsQ0FBQztZQUNWLElBQUksRUFBRSwwQkFBMEI7WUFDaEMsZUFBZSxFQUFFLE1BQU07WUFDdkIsY0FBYyxFQUFFLEtBQUs7U0FDdEIsQ0FBQyxDQUFDO1FBQ0wsSUFBSSxDQUFDLE9BQU8sR0FBRyxNQUFNLHlCQUF5QixDQUFDLE9BQU8sRUFBRTtZQUN0RCxjQUFjO1lBQ2QsMEJBQTBCO1NBQzNCLENBQUMsQ0FBQztJQUNMLENBQUM7SUFDRCxzQkFBc0IsQ0FBQyxJQUFZO1FBQ2pDLElBQUksQ0FBQyxrQkFBa0IsRUFBRSxDQUFDO1FBQzFCLE9BQU8sT0FBTyxDQUFDLEtBQUssQ0FBQyxXQUFXLENBQUMsTUFBTSxDQUFDLElBQUksRUFBRSxJQUFJLENBQUMsT0FBTyxDQUFDLENBQUMsQ0FBQztJQUMvRCxDQUFDO0lBRUQsa0JBQWtCLEtBQUksQ0FBQztDQUN4QjtBQUVELE9BQU8sQ0FBQyxNQUFNLENBQUMsa0JBQWtCLENBQUMsQ0FBQyIsInNvdXJjZXNDb250ZW50IjpbIi8vVGhlcmUgZG9lcyBub3QgYXBwZWFyIHRvIGJlIGEgZ29vZCB3YXkgdG8gcmVmZXJlbmNlIHdlYiB3b3JrZXIgYW5kIERPTSB0eXBlcyBpbiB0aGUgc2FtZSBwcm9qZWN0IGZvciBkaWZmZXJlbnQgZmlsZXMuXG4vL0ZvciBub3csIGp1c3QgY29tbWVudCBpbiB0aGUgYWJvdmUgaWYgd2ViIHdvcmtlciB0eXBlcyBhcmUgZGVzaXJlZCAoYW5kIGlnbm9yZSBhbnkgRE9NIHR5cGVzKVxuLy8gLy8vIDxyZWZlcmVuY2UgbGliPVwid2Vid29ya2VyXCIgLz5cblxuaW1wb3J0ICogYXMgQ29tbGluayBmcm9tIFwiaHR0cHM6Ly91bnBrZy5jb20vY29tbGluay9kaXN0L2VzbS9jb21saW5rLm1qc1wiO1xuaW1wb3J0IHsgQ29tcGlsYXRpb24gfSBmcm9tIFwiLi9Db21waWxhdGlvblwiO1xuaW1wb3J0IHR5cGUgeyBNb25vQ29uZmlnIH0gZnJvbSBcIi4vZG90bmV0XCI7XG5pbXBvcnQgeyBpbml0aWFsaXplV2FzbVNoYXJwTW9kdWxlIH0gZnJvbSBcIi4vaW5pdGlhbGl6ZVdhc21TaGFycE1vZHVsZVwiO1xuaW1wb3J0IHR5cGUgeyBDb21waWxhdGlvbkludGVyb3AgfSBmcm9tIFwiLi9Db21waWxhdGlvbkludGVyb3BcIjtcblxuZXhwb3J0IGNsYXNzIFdhc21TaGFycFdlYldvcmtlciB7XG4gIHByaXZhdGUgaW50ZXJvcCE6IENvbXBpbGF0aW9uSW50ZXJvcDtcbiAgY29uc3RydWN0b3IoKSB7XG4gICAgcmV0dXJuIHRoaXM7XG4gIH1cbiAgYXN5bmMgaW5pdGlhbGl6ZUFzeW5jKG9wdGlvbnM/OiBhbnkpIHtcbiAgICBjb25zdCBvbkNvbmZpZ0xvYWRlZCA9IChjb25maWc6IE1vbm9Db25maWcpID0+XG4gICAgICBwb3N0TWVzc2FnZSh7IHR5cGU6IFwiY29uZmlnTG9hZGVkXCIsIGNvbmZpZzogbnVsbCEgfSk7XG4gICAgY29uc3Qgb25Eb3dubG9hZFJlc291cmNlUHJvZ3Jlc3MgPSAobG9hZGVkOiBudW1iZXIsIHRvdGFsOiBudW1iZXIpID0+XG4gICAgICBwb3N0TWVzc2FnZSh7XG4gICAgICAgIHR5cGU6IFwiZG93bmxvYWRSZXNvdXJjZVByb2dyZXNzXCIsXG4gICAgICAgIGxvYWRlZFJlc291cmNlczogbG9hZGVkLFxuICAgICAgICB0b3RhbFJlc291cmNlczogdG90YWwsXG4gICAgICB9KTtcbiAgICB0aGlzLmludGVyb3AgPSBhd2FpdCBpbml0aWFsaXplV2FzbVNoYXJwTW9kdWxlKG9wdGlvbnMsIHtcbiAgICAgIG9uQ29uZmlnTG9hZGVkLFxuICAgICAgb25Eb3dubG9hZFJlc291cmNlUHJvZ3Jlc3MsXG4gICAgfSk7XG4gIH1cbiAgY3JlYXRlQ29tcGlsYXRpb25Bc3luYyhjb2RlOiBzdHJpbmcpOiBDb21waWxhdGlvbiB7XG4gICAgdGhpcy4jZW5zdXJlSW5pdGlhbGl6ZWQoKTtcbiAgICByZXR1cm4gQ29tbGluay5wcm94eShDb21waWxhdGlvbi5jcmVhdGUoY29kZSwgdGhpcy5pbnRlcm9wKSk7XG4gIH1cblxuICAjZW5zdXJlSW5pdGlhbGl6ZWQoKSB7fVxufVxuXG5Db21saW5rLmV4cG9zZShXYXNtU2hhcnBXZWJXb3JrZXIpO1xuIl19

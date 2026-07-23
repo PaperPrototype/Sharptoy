@@ -1,0 +1,41 @@
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// /** @type {import("./dotnet").CreateDotnetRuntimeType} */
+// const createDotnetRuntime = createDotnetRuntimeUntyped;
+console.log("TODO: Hook into wasm runtime load and send bytes for arrays to create metadata references. Might not be feasible. (Maybe hook into mono_wasm_add_assembly?)");
+console.log("TODO: Add loading progress hook - see ASP NET Core MonoPlatform.ts for examples.");
+console.log("Test message that should be seen.");
+export {};
+// const style = `
+// font-size:1.1rem;
+// font-family:sans-serif;
+// background-color:0x333;
+// `;
+// console.log("%cInitialising wasm compiler", style);
+// const time = performance.now();
+// console.log(`loading files from ${import.meta.url}`);
+// await assemblyExports.CompilationInterop.InitAsync(
+//   import.meta.url,
+//   JSON.stringify(config)
+// );
+// const diff = performance.now() - time;
+// console.log(`%cFinished initialising wasm compiler in ${diff}ms`, style);
+//const context = await AssemblyContext.createAsync();
+//const code = `
+//using System;
+//Console.WriteLine("Hello World");
+//`;
+//const compilation = context.createCompilation(code);
+//compilation.recompile(code);
+//const result = await compilation.run();
+//console.log(result.success);
+//console.log(result.stdOut);
+//console.log(result.stdErr);
+//document.getElementById("recompile")?.addEventListener("click", async () => {
+//  compilation.recompile(code);
+//  const result = await compilation.run();
+//  console.log(result.success);
+//  console.log(result.stdOut);
+//  console.log(result.stdErr);
+//});
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibWFpbi5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uL21haW4udHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsZ0VBQWdFO0FBQ2hFLHVFQUF1RTtBQVF2RSw0REFBNEQ7QUFDNUQsMERBQTBEO0FBRTFELE9BQU8sQ0FBQyxHQUFHLENBQ1QsNkpBQTZKLENBQzlKLENBQUM7QUFDRixPQUFPLENBQUMsR0FBRyxDQUFDLGtGQUFrRixDQUFDLENBQUM7QUFDaEcsT0FBTyxDQUFDLEdBQUcsQ0FBQyxtQ0FBbUMsQ0FBQyxDQUFDOztBQUVqRCxrQkFBa0I7QUFDbEIsb0JBQW9CO0FBQ3BCLDBCQUEwQjtBQUMxQiwwQkFBMEI7QUFDMUIsS0FBSztBQUNMLHNEQUFzRDtBQUN0RCxrQ0FBa0M7QUFDbEMsd0RBQXdEO0FBQ3hELHNEQUFzRDtBQUN0RCxxQkFBcUI7QUFDckIsMkJBQTJCO0FBQzNCLEtBQUs7QUFDTCx5Q0FBeUM7QUFDekMsNEVBQTRFO0FBRTVFLHNEQUFzRDtBQUN0RCxnQkFBZ0I7QUFDaEIsZUFBZTtBQUNmLG1DQUFtQztBQUNuQyxJQUFJO0FBQ0osc0RBQXNEO0FBRXRELDhCQUE4QjtBQUM5Qix5Q0FBeUM7QUFDekMsOEJBQThCO0FBQzlCLDZCQUE2QjtBQUM3Qiw2QkFBNkI7QUFFN0IsK0VBQStFO0FBQy9FLGdDQUFnQztBQUNoQywyQ0FBMkM7QUFDM0MsZ0NBQWdDO0FBQ2hDLCtCQUErQjtBQUMvQiwrQkFBK0I7QUFDL0IsS0FBSyIsInNvdXJjZXNDb250ZW50IjpbIi8vIExpY2Vuc2VkIHRvIHRoZSAuTkVUIEZvdW5kYXRpb24gdW5kZXIgb25lIG9yIG1vcmUgYWdyZWVtZW50cy5cbi8vIFRoZSAuTkVUIEZvdW5kYXRpb24gbGljZW5zZXMgdGhpcyBmaWxlIHRvIHlvdSB1bmRlciB0aGUgTUlUIGxpY2Vuc2UuXG5cbi8vVE9ETzogVGlkeSB1cCBmaWxlXG5cbi8vIC8qKiBAdHlwZSB7aW1wb3J0KFwiLi9kb3RuZXRcIil9ICovXG4vLyBpbXBvcnQgeyBkb3RuZXQsIGRlZmF1bHQgYXMgY3JlYXRlRG90bmV0UnVudGltZVVudHlwZWQgfSBmcm9tIFwiLi9kb3RuZXQuanNcIjtcbmltcG9ydCB7IFdhc21TaGFycE1vZHVsZSB9IGZyb20gXCIuL1dhc21Db21waWxlci5qc1wiO1xuXG4vLyAvKiogQHR5cGUge2ltcG9ydChcIi4vZG90bmV0XCIpLkNyZWF0ZURvdG5ldFJ1bnRpbWVUeXBlfSAqL1xuLy8gY29uc3QgY3JlYXRlRG90bmV0UnVudGltZSA9IGNyZWF0ZURvdG5ldFJ1bnRpbWVVbnR5cGVkO1xuXG5jb25zb2xlLmxvZyhcbiAgXCJUT0RPOiBIb29rIGludG8gd2FzbSBydW50aW1lIGxvYWQgYW5kIHNlbmQgYnl0ZXMgZm9yIGFycmF5cyB0byBjcmVhdGUgbWV0YWRhdGEgcmVmZXJlbmNlcy4gTWlnaHQgbm90IGJlIGZlYXNpYmxlLiAoTWF5YmUgaG9vayBpbnRvIG1vbm9fd2FzbV9hZGRfYXNzZW1ibHk/KVwiXG4pO1xuY29uc29sZS5sb2coXCJUT0RPOiBBZGQgbG9hZGluZyBwcm9ncmVzcyBob29rIC0gc2VlIEFTUCBORVQgQ29yZSBNb25vUGxhdGZvcm0udHMgZm9yIGV4YW1wbGVzLlwiKTtcbmNvbnNvbGUubG9nKFwiVGVzdCBtZXNzYWdlIHRoYXQgc2hvdWxkIGJlIHNlZW4uXCIpO1xuXG4vLyBjb25zdCBzdHlsZSA9IGBcbi8vIGZvbnQtc2l6ZToxLjFyZW07XG4vLyBmb250LWZhbWlseTpzYW5zLXNlcmlmO1xuLy8gYmFja2dyb3VuZC1jb2xvcjoweDMzMztcbi8vIGA7XG4vLyBjb25zb2xlLmxvZyhcIiVjSW5pdGlhbGlzaW5nIHdhc20gY29tcGlsZXJcIiwgc3R5bGUpO1xuLy8gY29uc3QgdGltZSA9IHBlcmZvcm1hbmNlLm5vdygpO1xuLy8gY29uc29sZS5sb2coYGxvYWRpbmcgZmlsZXMgZnJvbSAke2ltcG9ydC5tZXRhLnVybH1gKTtcbi8vIGF3YWl0IGFzc2VtYmx5RXhwb3J0cy5Db21waWxhdGlvbkludGVyb3AuSW5pdEFzeW5jKFxuLy8gICBpbXBvcnQubWV0YS51cmwsXG4vLyAgIEpTT04uc3RyaW5naWZ5KGNvbmZpZylcbi8vICk7XG4vLyBjb25zdCBkaWZmID0gcGVyZm9ybWFuY2Uubm93KCkgLSB0aW1lO1xuLy8gY29uc29sZS5sb2coYCVjRmluaXNoZWQgaW5pdGlhbGlzaW5nIHdhc20gY29tcGlsZXIgaW4gJHtkaWZmfW1zYCwgc3R5bGUpO1xuXG4vL2NvbnN0IGNvbnRleHQgPSBhd2FpdCBBc3NlbWJseUNvbnRleHQuY3JlYXRlQXN5bmMoKTtcbi8vY29uc3QgY29kZSA9IGBcbi8vdXNpbmcgU3lzdGVtO1xuLy9Db25zb2xlLldyaXRlTGluZShcIkhlbGxvIFdvcmxkXCIpO1xuLy9gO1xuLy9jb25zdCBjb21waWxhdGlvbiA9IGNvbnRleHQuY3JlYXRlQ29tcGlsYXRpb24oY29kZSk7XG5cbi8vY29tcGlsYXRpb24ucmVjb21waWxlKGNvZGUpO1xuLy9jb25zdCByZXN1bHQgPSBhd2FpdCBjb21waWxhdGlvbi5ydW4oKTtcbi8vY29uc29sZS5sb2cocmVzdWx0LnN1Y2Nlc3MpO1xuLy9jb25zb2xlLmxvZyhyZXN1bHQuc3RkT3V0KTtcbi8vY29uc29sZS5sb2cocmVzdWx0LnN0ZEVycik7XG5cbi8vZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoXCJyZWNvbXBpbGVcIik/LmFkZEV2ZW50TGlzdGVuZXIoXCJjbGlja1wiLCBhc3luYyAoKSA9PiB7XG4vLyAgY29tcGlsYXRpb24ucmVjb21waWxlKGNvZGUpO1xuLy8gIGNvbnN0IHJlc3VsdCA9IGF3YWl0IGNvbXBpbGF0aW9uLnJ1bigpO1xuLy8gIGNvbnNvbGUubG9nKHJlc3VsdC5zdWNjZXNzKTtcbi8vICBjb25zb2xlLmxvZyhyZXN1bHQuc3RkT3V0KTtcbi8vICBjb25zb2xlLmxvZyhyZXN1bHQuc3RkRXJyKTtcbi8vfSk7XG4iXX0=
